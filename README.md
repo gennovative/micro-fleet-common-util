@@ -1,8 +1,9 @@
 # Gennova backend common utility
 
 # INSTALLATION
-* If `DependencyContainer` is used:
-`npm install --save reflect-metadata`
+
+Whenever `inject`, `injectable`, or `DependencyContainer` is used:
+
 `import 'reflect-metadata';` only once in the entire program.
 
 # VERSIONS
@@ -10,4 +11,4 @@
 - DependencyContainer
 - Guard
 - Exception
-- *Testing coverage*: 66%
+- **Testing coverage**: 66%
