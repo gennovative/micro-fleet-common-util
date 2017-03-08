@@ -1,7 +1,7 @@
 {
   "name": "back-lib-common-util",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Shared utility classes used by all other packages.",
   "main": "./dist/app/index.js",
   "types": "./typings/app.d.ts",

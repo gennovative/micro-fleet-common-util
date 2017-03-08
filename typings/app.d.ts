@@ -1,3 +1,5 @@
+/// <reference path="./global.d.ts" />
+
 declare module 'back-lib-common-util/Exceptions' {
 	export class Exception implements Error {
 	    protected _message: string;
@@ -87,4 +89,5 @@ declare module 'back-lib-common-util' {
 	export * from 'back-lib-common-util/DependencyContainer';
 	export * from 'back-lib-common-util/Exceptions';
 	export * from 'back-lib-common-util/Guard';
+
 }
