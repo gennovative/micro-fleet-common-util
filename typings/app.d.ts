@@ -1,14 +1,13 @@
 /// <reference path="./global.d.ts" />
 
-declare module 'back-lib-common-util/Exceptions' {
+declare module 'back-lib-common-util/src/app/Exceptions' {
 	export class Exception implements Error {
 	    protected _message: string;
 	    protected _isCritical: boolean;
-	    private _name;
-	    private _stack;
+	    stack: string;
+	    protected _name: string;
 	    constructor(_message?: string, _isCritical?: boolean);
 	    name: string;
-	    stack: string;
 	    readonly message: string;
 	    readonly isCritical: boolean;
 	    toString(): string;
@@ -24,19 +23,62 @@ declare module 'back-lib-common-util/Exceptions' {
 	}
 
 }
-declare module 'back-lib-common-util/Guard' {
+declare module 'back-lib-common-util/src/app/Guard' {
 	export class Guard {
-	    private constructor();
+	    /**
+	     * Makes sure the specified `target` is not null or undefined.
+	     * @param name {string} Name to include in error message if assertion fails.
+	     * @param target {any} Argument to check.
+	     * @param message {string} Optional error message.
+	     * @throws {InvalidArgumentException} If assertion fails.
+	     */
 	    static assertDefined(name: string, target: any, message?: string): void;
+	    /**
+	     * Makes sure the specified `target` is an object, array, or string which is not null or undefined.
+	     * If `target` is a string or array, it must have `length` greater than 0,
+	     * If it is an object, it must have at least one property.
+	     * @param name {string} Name to include in error message if assertion fails.
+	     * @param target {any} Argument to check.
+	     * @param message {string} Optional error message.
+	     * @throws {InvalidArgumentException} If assertion fails.
+	     */
 	    static assertNotEmpty(name: string, target: any, message?: string): void;
+	    /**
+	     * Makes sure the specified `target` is a function.
+	     * @param name {string} Name to include in error message if assertion fails.
+	     * @param target {any} Argument to check.
+	     * @param message {string} Optional error message.
+	     * @throws {InvalidArgumentException} If assertion fails.
+	     */
 	    static assertIsFunction(name: string, target: any, message?: string): void;
-	    static assertIsTruthy(target: any, message: string, isCritical?: boolean): void;
-	    static assertIsFalsey(target: any, message: string, isCritical?: boolean): void;
+	    /**
+	     * Makes sure the specified `target` matches Regular Expression `rule`.
+	     * @param name {string} Name to include in error message if assertion fails.
+	     * @param target {any} Argument to check.
+	     * @param message {string} Optional error message.
+	     * @throws {InvalidArgumentException} If assertion fails.
+	     */
 	    static assertIsMatch(name: string, rule: RegExp, target: string, message?: string): void;
+	    /**
+	     * Makes sure the specified `target` is considered "truthy" based on JavaScript rule.
+	     * @param target {any} Argument to check.
+	     * @param message {string} Error message.
+	     * @param isCritical {boolean} If true, throws CriticalException. Otherwise, throws MinorException when assertion fails.
+	     * @throws {CriticalException} If assertion fails and `isCritical` is true.
+	     * @throws {MinorException} If assertion fails and `isCritical` is false.
+	     */
+	    static assertIsTruthy(target: any, message: string, isCritical?: boolean): void;
+	    /**
+	     * Makes sure the specified `target` is considered "falsey" based on JavaScript rule.
+	     * @param target {any} Argument to check.
+	     * @param message {string} Error message.
+	     * @throws {InvalidArgumentException} If assertion fails.
+	     */
+	    static assertIsFalsey(target: any, message: string, isCritical?: boolean): void;
 	}
 
 }
-declare module 'back-lib-common-util/DependencyContainer' {
+declare module 'back-lib-common-util/src/app/DependencyContainer' {
 	import { injectable, inject, interfaces } from 'inversify';
 	export class BindingScope<T> {
 	    private _binding;
@@ -82,12 +124,13 @@ declare module 'back-lib-common-util/DependencyContainer' {
 	    resolve<T>(identifier: string | symbol): T;
 	    dispose(): void;
 	    private assertNotDisposed();
+	    private unboundIfDuplicate(identifier);
 	}
 
 }
 declare module 'back-lib-common-util' {
-	export * from 'back-lib-common-util/DependencyContainer';
-	export * from 'back-lib-common-util/Exceptions';
-	export * from 'back-lib-common-util/Guard';
+	export * from 'back-lib-common-util/src/app/DependencyContainer';
+	export * from 'back-lib-common-util/src/app/Exceptions';
+	export * from 'back-lib-common-util/src/app/Guard';
 
 }

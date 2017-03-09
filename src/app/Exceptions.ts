@@ -1,28 +1,21 @@
 export class Exception implements Error {
 
-	private _name: string;
-	private _stack: string;
+	public stack: string;
+
+	protected _name: string;
 
 	constructor(protected _message?: string, protected _isCritical?: boolean) {
-		this._stack = '';
+		this.stack = '';
 		this._name = '';
 		Error.captureStackTrace(this, Exception);
 	}
 
 	public get name(): string {
-		return this._stack;
+		return this._name;
 	}
 
 	public set name(value: string) {
-		this._stack = value;
-	}
-
-	public get stack(): string {
-		return this._stack;
-	}
-
-	public set stack(value: string) {
-		this._stack = value;
+		this._name = value;
 	}
 
 	public get message(): string {
@@ -39,7 +32,7 @@ export class Exception implements Error {
 		//
 		// Ex 2: [Minor]
 		//		 <stacktrace here>
-		return `[${ (this._isCritical ? 'Critical' : 'Minor') }] ${ this._message ? this._message : '' } \n ${this._stack}`;
+		return `[${ (this._isCritical ? 'Critical' : 'Minor') }] ${ this._message ? this._message : '' } \n ${this.stack}`;
 	}
 }
 

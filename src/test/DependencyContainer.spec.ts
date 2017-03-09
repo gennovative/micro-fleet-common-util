@@ -22,6 +22,58 @@ class Dummy implements IDummy {
 }
 
 describe('DependencyContainer', () => {
+	describe('bindConstant', () => {
+		it('should return same value everytime', () => {
+			// Arrange
+			const VALUE = 'abc';
+			let container = new DependencyContainer(),
+				internalContainer: Container = container['_container'];
+			
+			// Act
+			container.bindConstant<string>(IDENTIFIER, VALUE);
+
+			// Assert
+			let instance_1st = internalContainer.get<string>(IDENTIFIER),
+				instance_2nd = internalContainer.get<string>(IDENTIFIER),
+				instance_3rd = internalContainer.get<string>(IDENTIFIER);
+
+			expect(instance_1st).to.be.a('string');
+			expect(instance_2nd).to.be.a('string');
+			expect(instance_3rd).to.be.a('string');
+
+			expect(instance_1st).to.equal(VALUE);
+			expect(instance_1st).to.equal(instance_2nd); // instance_1st === instance_2nd
+			expect(instance_1st).to.equal(instance_3rd); // instance_1st === instance_3rd
+			expect(instance_2nd).to.equal(instance_3rd); // instance_2nd === instance_3rd
+		});
+		
+		it('should override previous binding with same identifier', () => {
+			// Arrange
+			const VALUE_OLD = 'abc',
+				VALUE_NEW = 'xyz';
+			let container = new DependencyContainer(),
+				internalContainer: Container = container['_container'];
+			
+			// Act
+			container.bindConstant<string>(IDENTIFIER, VALUE_OLD);
+			container.bindConstant<string>(IDENTIFIER, VALUE_NEW);
+
+			// Assert
+			let instance_1st = internalContainer.get<string>(IDENTIFIER),
+				instance_2nd = internalContainer.get<string>(IDENTIFIER),
+				instance_3rd = internalContainer.get<string>(IDENTIFIER);
+
+			expect(instance_1st).to.be.a('string');
+			expect(instance_2nd).to.be.a('string');
+			expect(instance_3rd).to.be.a('string');
+
+			expect(instance_1st).to.equal(VALUE_NEW);
+			expect(instance_1st).to.equal(instance_2nd); // instance_1st === instance_2nd
+			expect(instance_1st).to.equal(instance_3rd); // instance_1st === instance_3rd
+			expect(instance_2nd).to.equal(instance_3rd); // instance_2nd === instance_3rd
+		});
+	}); // describe 'bindConstant'
+
 	describe('bind', () => {
 		it('should register dependency to internal container, with string identifier', () => {
 			// Arrange
@@ -104,7 +156,7 @@ describe('DependencyContainer', () => {
 			expect(instance_2nd.getName()).to.equal(NAME);
 			expect(instance_3rd.getName()).to.equal(NAME);
 		});
-	});
+	}); // describe 'bind'
 	
 	describe('resolve', () => {
 		it('should get dependency from internal container', () => {
@@ -133,7 +185,7 @@ describe('DependencyContainer', () => {
 			// Assert
 			expect(resolveInstance).to.be.null;
 		});
-	});
+	}); // describe 'resolve'
 	
 	describe('dispose', () => {
 		it('should throw exception if called after disposal', () => {
@@ -155,5 +207,5 @@ describe('DependencyContainer', () => {
 			expect(exception).to.be.not.null;
 			expect(exception).to.equal('Container has been disposed!');
 		});
-	});
+	}); // describe 'dispose'
 });

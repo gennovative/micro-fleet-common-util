@@ -4,21 +4,15 @@ class Exception {
     constructor(_message, _isCritical) {
         this._message = _message;
         this._isCritical = _isCritical;
-        this._stack = '';
+        this.stack = '';
         this._name = '';
         Error.captureStackTrace(this, Exception);
     }
     get name() {
-        return this._stack;
+        return this._name;
     }
     set name(value) {
-        this._stack = value;
-    }
-    get stack() {
-        return this._stack;
-    }
-    set stack(value) {
-        this._stack = value;
+        this._name = value;
     }
     get message() {
         return this._message;
@@ -32,7 +26,7 @@ class Exception {
         //
         // Ex 2: [Minor]
         //		 <stacktrace here>
-        return `[${(this._isCritical ? 'Critical' : 'Minor')}] ${this._message ? this._message : ''} \n ${this._stack}`;
+        return `[${(this._isCritical ? 'Critical' : 'Minor')}] ${this._message ? this._message : ''} \n ${this.stack}`;
     }
 }
 exports.Exception = Exception;

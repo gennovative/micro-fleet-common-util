@@ -68,9 +68,7 @@ export class DependencyContainer {
 		let container = this._container,
 			binding, scope;
 		
-		if (container.isBound(identifier)) {
-			container.unbind(identifier);
-		}
+		this.unboundIfDuplicate(identifier);
 
 		binding = this._container.bind<TInterface>(identifier).to(constructor);
 		scope = new BindingScope<TInterface>(binding);
@@ -79,6 +77,7 @@ export class DependencyContainer {
 	}
 
 	public bindConstant<T>(identifier: string | symbol, value: T): void {
+		this.unboundIfDuplicate(identifier);
 		this._container.bind<T>(identifier).toConstantValue(value);
 	}
 
@@ -101,6 +100,12 @@ export class DependencyContainer {
 	private assertNotDisposed() {
 		if (!this._container) {
 			throw 'Container has been disposed!';
+		}
+	}
+
+	private unboundIfDuplicate(identifier: string | symbol): void {
+		if (this._container.isBound(identifier)) {
+			this._container.unbind(identifier);
 		}
 	}
 }
