@@ -9,6 +9,7 @@
     "test": "./node_modules/.bin/mocha --reporter spec ./dist/test/**/*.js"
   },
   "dependencies": {
+	"automapper-ts": "^1.8.1",
     "inversify": "^3.1.0",
     "lodash": "^4.17.4",
     "reflect-metadata": "^0.1.9"
