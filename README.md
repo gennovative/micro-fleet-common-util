@@ -8,6 +8,8 @@ Whenever `inject`, `injectable`, or `DependencyContainer` is used:
 
 # VERSIONS
 ## 1.0.0
+- Added Types constants.
+- Added AutoMapper definition.
 - **Testing coverage**: 100%
 
 ## 0.1.0
