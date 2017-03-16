@@ -81,7 +81,6 @@ declare module 'back-lib-common-util/src/app/Guard' {
 declare module 'back-lib-common-util/src/app/DependencyContainer' {
 	import { injectable, inject, interfaces } from 'inversify';
 	export class BindingScope<T> {
-	    private _binding;
 	    constructor(_binding: interfaces.BindingInWhenOnSyntax<T>);
 	    asSingleton(): void;
 	    asTransient(): void;
@@ -117,14 +116,18 @@ declare module 'back-lib-common-util/src/app/DependencyContainer' {
 	    dispose(): void;
 	}
 	export class DependencyContainer {
-	    private _container;
 	    constructor();
 	    bind<TInterface>(identifier: string | symbol, constructor: INewable<TInterface>): BindingScope<TInterface>;
 	    bindConstant<T>(identifier: string | symbol, value: T): void;
 	    resolve<T>(identifier: string | symbol): T;
 	    dispose(): void;
-	    private assertNotDisposed();
-	    private unboundIfDuplicate(identifier);
+	}
+
+}
+declare module 'back-lib-common-util/src/app/Types' {
+	export class Types {
+	    static readonly MODEL_MAPPER: symbol;
+	    static readonly DEPENDENCY_CONTAINER: symbol;
 	}
 
 }
@@ -132,5 +135,6 @@ declare module 'back-lib-common-util' {
 	export * from 'back-lib-common-util/src/app/DependencyContainer';
 	export * from 'back-lib-common-util/src/app/Exceptions';
 	export * from 'back-lib-common-util/src/app/Guard';
+	export * from 'back-lib-common-util/src/app/Types';
 
 }
