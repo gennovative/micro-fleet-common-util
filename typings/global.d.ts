@@ -31,3 +31,10 @@ declare interface IAdapter {
 	 */
 	dispose(): Promise<void>;
 }
+
+/**
+ * Represents a data transfer object, aka: business model.
+ */
+declare interface IModelDTO {
+	id: number;
+}
