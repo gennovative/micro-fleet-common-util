@@ -1,6 +1,6 @@
 /// <reference path="./global.d.ts" />
 
-declare module 'back-lib-common-util/src/app/Exceptions' {
+declare module 'back-lib-common-util/Exceptions' {
 	export class Exception implements Error {
 	    protected _message: string;
 	    protected _isCritical: boolean;
@@ -23,7 +23,7 @@ declare module 'back-lib-common-util/src/app/Exceptions' {
 	}
 
 }
-declare module 'back-lib-common-util/src/app/Guard' {
+declare module 'back-lib-common-util/Guard' {
 	export class Guard {
 	    /**
 	     * Makes sure the specified `target` is not null or undefined.
@@ -78,7 +78,7 @@ declare module 'back-lib-common-util/src/app/Guard' {
 	}
 
 }
-declare module 'back-lib-common-util/src/app/DependencyContainer' {
+declare module 'back-lib-common-util/DependencyContainer' {
 	import { injectable, inject, interfaces } from 'inversify';
 	export class BindingScope<T> {
 	    constructor(_binding: interfaces.BindingInWhenOnSyntax<T>);
@@ -124,7 +124,7 @@ declare module 'back-lib-common-util/src/app/DependencyContainer' {
 	}
 
 }
-declare module 'back-lib-common-util/src/app/Types' {
+declare module 'back-lib-common-util/Types' {
 	export class Types {
 	    static readonly MODEL_MAPPER: symbol;
 	    static readonly DEPENDENCY_CONTAINER: symbol;
@@ -132,9 +132,9 @@ declare module 'back-lib-common-util/src/app/Types' {
 
 }
 declare module 'back-lib-common-util' {
-	export * from 'back-lib-common-util/src/app/DependencyContainer';
-	export * from 'back-lib-common-util/src/app/Exceptions';
-	export * from 'back-lib-common-util/src/app/Guard';
-	export * from 'back-lib-common-util/src/app/Types';
+	export * from 'back-lib-common-util/DependencyContainer';
+	export * from 'back-lib-common-util/Exceptions';
+	export * from 'back-lib-common-util/Guard';
+	export * from 'back-lib-common-util/Types';
 
 }
