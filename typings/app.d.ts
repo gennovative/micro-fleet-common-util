@@ -132,7 +132,7 @@ declare module 'back-lib-common-util/Types' {
 	}
 
 }
-declare module 'back-lib-common-util/' {
+declare module 'back-lib-common-util' {
 	export * from 'back-lib-common-util/DependencyContainer';
 	export * from 'back-lib-common-util/Exceptions';
 	export * from 'back-lib-common-util/Guard';
