@@ -116,6 +116,7 @@ declare module 'back-lib-common-util/DependencyContainer' {
 	    dispose(): void;
 	}
 	export class DependencyContainer {
+	    private _container;
 	    constructor();
 	    bind<TInterface>(identifier: string | symbol, constructor: INewable<TInterface>): BindingScope<TInterface>;
 	    bindConstant<T>(identifier: string | symbol, value: T): void;
@@ -131,7 +132,7 @@ declare module 'back-lib-common-util/Types' {
 	}
 
 }
-declare module 'back-lib-common-util' {
+declare module 'back-lib-common-util/' {
 	export * from 'back-lib-common-util/DependencyContainer';
 	export * from 'back-lib-common-util/Exceptions';
 	export * from 'back-lib-common-util/Guard';
