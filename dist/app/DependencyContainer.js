@@ -23,7 +23,7 @@ class DependencyContainer {
     }
     bind(identifier, constructor) {
         this.assertNotDisposed();
-        Guard_1.Guard.assertDefined('constructor', constructor);
+        Guard_1.Guard.assertArgDefined('constructor', constructor);
         let container = this._container, binding, scope;
         this.unboundIfDuplicate(identifier);
         binding = this._container.bind(identifier).to(constructor);

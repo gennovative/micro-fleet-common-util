@@ -1,8 +1,10 @@
-import * as _ from 'lodash';
+const isEmpty = require('lodash/isEmpty');
+const isFunction = require('lodash/isFunction');
+
 import * as ex from './Exceptions';
 
+
 export class Guard {
-	//private constructor() {}
 
 	/**
 	 * Makes sure the specified `target` is not null or undefined.
@@ -11,7 +13,7 @@ export class Guard {
 	 * @param message {string} Optional error message.
 	 * @throws {InvalidArgumentException} If assertion fails.
 	 */
-	public static assertDefined(name: string, target: any, message?: string): void {
+	public static assertArgDefined(name: string, target: any, message?: string): void {
 		if (target === null || target === undefined) {
 			throw new ex.InvalidArgumentException(name, message || 'Must not be null or undefined!');
 		}
@@ -26,8 +28,8 @@ export class Guard {
 	 * @param message {string} Optional error message.
 	 * @throws {InvalidArgumentException} If assertion fails.
 	 */
-	public static assertNotEmpty(name: string, target: any, message?: string): void {
-		if (_.isEmpty(target)) {
+	public static assertArgNotEmpty(name: string, target: any, message?: string): void {
+		if (isEmpty(target)) {
 			throw new ex.InvalidArgumentException(name, message || 'Must not be null, undefined or empty!');
 		}
 	}
@@ -39,8 +41,8 @@ export class Guard {
 	 * @param message {string} Optional error message.
 	 * @throws {InvalidArgumentException} If assertion fails.
 	 */
-	public static assertIsFunction(name: string, target: any, message?: string): void {
-		if (!_.isFunction(target)) {
+	public static assertArgFunction(name: string, target: any, message?: string): void {
+		if (!isFunction(target)) {
 			throw new ex.InvalidArgumentException(name, message || 'Must be a function!');
 		}
 	}
@@ -52,10 +54,61 @@ export class Guard {
 	 * @param message {string} Optional error message.
 	 * @throws {InvalidArgumentException} If assertion fails.
 	 */
-	public static assertIsMatch(name: string, rule: RegExp, target: string, message?: string): void {
+	public static assertArgMatch(name: string, rule: RegExp, target: string, message?: string): void {
 		if (!rule.test(target)) {
 			throw new ex.InvalidArgumentException(name, message || 'Does not match specified rule!');
 		}
+	}
+
+
+	/**
+	 * Makes sure the specified `target` is not null or undefined.
+	 * @param target {any} Argument to check.
+	 * @param message {string} Optional error message.
+	 * @param isCritical {boolean} If true, throws CriticalException. Otherwise, throws MinorException when assertion fails.
+	 * @throws {CriticalException} If assertion fails and `isCritical` is true.
+	 * @throws {MinorException} If assertion fails and `isCritical` is false.
+	 */
+	public static assertIsDefined(target: any, message?: string, isCritical: boolean = true): void {
+		Guard.assertIsFalsey(target === null || target === undefined, message, isCritical);
+	}
+
+	/**
+	 * Makes sure the specified `target` is an object, array, or string which is not null or undefined.
+	 * If `target` is a string or array, it must have `length` greater than 0,
+	 * If it is an object, it must have at least one property.
+	 * @param target {any} Argument to check.
+	 * @param message {string} Optional error message.
+	 * @param isCritical {boolean} If true, throws CriticalException. Otherwise, throws MinorException when assertion fails.
+	 * @throws {CriticalException} If assertion fails and `isCritical` is true.
+	 * @throws {MinorException} If assertion fails and `isCritical` is false.
+	 */
+	public static assertIsNotEmpty(target: any, message?: string, isCritical: boolean = true): void {
+		Guard.assertIsFalsey(isEmpty(target), message, isCritical);
+	}
+
+	/**
+	 * Makes sure the specified `target` is a function.
+	 * @param target {any} Argument to check.
+	 * @param message {string} Optional error message.
+	 * @param isCritical {boolean} If true, throws CriticalException. Otherwise, throws MinorException when assertion fails.
+	 * @throws {CriticalException} If assertion fails and `isCritical` is true.
+	 * @throws {MinorException} If assertion fails and `isCritical` is false.
+	 */
+	public static assertIsFunction(target: any, message?: string, isCritical: boolean = true): void {
+		Guard.assertIsTruthy(isFunction(target), message, isCritical);
+	}
+
+	/**
+	 * Makes sure the specified `target` matches Regular Expression `rule`.
+	 * @param target {any} Argument to check.
+	 * @param message {string} Optional error message.
+	 * @param isCritical {boolean} If true, throws CriticalException. Otherwise, throws MinorException when assertion fails.
+	 * @throws {CriticalException} If assertion fails and `isCritical` is true.
+	 * @throws {MinorException} If assertion fails and `isCritical` is false.
+	 */
+	public static assertIsMatch(rule: RegExp, target: string, message?: string, isCritical: boolean = true): void {
+		Guard.assertIsTruthy(rule.test(target), message, isCritical);
 	}
 
 	/**
@@ -83,7 +136,13 @@ export class Guard {
 	 * @throws {InvalidArgumentException} If assertion fails.
 	 */
 	public static assertIsFalsey(target: any, message: string, isCritical: boolean = true): void {
-		Guard.assertIsTruthy(!target, message, isCritical);
+		if (target) {
+			if (isCritical) {
+				throw new ex.CriticalException(message);
+			} else {
+				throw new ex.MinorException(message);
+			}
+		}
 	}
 
 }

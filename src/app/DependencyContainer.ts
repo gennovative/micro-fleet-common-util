@@ -63,7 +63,7 @@ export class DependencyContainer {
 
 	public bind<TInterface>(identifier: string | symbol, constructor: INewable<TInterface>): BindingScope<TInterface> {
 		this.assertNotDisposed();
-		Guard.assertDefined('constructor', constructor);
+		Guard.assertArgDefined('constructor', constructor);
 		
 		let container = this._container,
 			binding, scope;
