@@ -17,17 +17,17 @@ declare type PromiseRejectFn = (reason?: any) => void;
 
 /**
  * If an object wants to be initialized when microservice proccess starts, it must
- * implements this interface to be able to add to adapter list.
+ * implements this interface to be able to add to add-on list.
  */
-declare interface IAdapter {
+declare interface IAddOn {
 	/**
-	 * Initializes this adapter.
+	 * Initializes this add-on.
 	 * @returns A promise that resolves `true` if success, rejects if otherwise.
 	 */
 	init(): Promise<void>;
 	
 	/**
-	 * Stops this adapter and cleans all resources.
+	 * Stops this add-on and cleans all resources.
 	 */
 	dispose(): Promise<void>;
 }
