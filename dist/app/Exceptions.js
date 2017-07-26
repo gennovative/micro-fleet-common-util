@@ -1,12 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+Error.stackTraceLimit = 20;
 class Exception {
-    constructor(_message, _isCritical) {
+    /**
+     *
+     * @param _message
+     * @param _isCritical
+     * @param exceptionClass {class} The exception class to exclude from stacktrace.
+     */
+    constructor(_message, _isCritical, exceptionClass) {
         this._message = _message;
         this._isCritical = _isCritical;
         this.stack = '';
         this._name = '';
-        Error.captureStackTrace(this, Exception);
+        Error.captureStackTrace(this, exceptionClass || Exception);
     }
     get name() {
         return this._name;
@@ -30,21 +37,33 @@ class Exception {
     }
 }
 exports.Exception = Exception;
+/**
+ * Represents a serious problem that may cause the system in unstable state
+ * and need restarting.
+ */
 class CriticalException extends Exception {
     constructor(message) {
-        super(message, false);
+        super(message, false, CriticalException);
     }
 }
 exports.CriticalException = CriticalException;
+/**
+ * Represents an acceptable problem that can be handled
+ * and the system does not need restarting.
+ */
 class MinorException extends Exception {
     constructor(message) {
-        super(message, false);
+        super(message, false, MinorException);
     }
 }
 exports.MinorException = MinorException;
+/**
+ * Represents an error where the provided argument of a function or constructor
+ * is not as expected.
+ */
 class InvalidArgumentException extends Exception {
     constructor(argName, message) {
-        super(`The argument "${argName}" is invalid! ${(message ? message : '')}`, true);
+        super(`The argument "${argName}" is invalid! ${(message ? message : '')}`, true, InvalidArgumentException);
     }
 }
 exports.InvalidArgumentException = InvalidArgumentException;
