@@ -34,6 +34,13 @@ class DependencyContainer {
         this.unboundIfDuplicate(identifier);
         this._container.bind(identifier).toConstantValue(value);
     }
+    dispose() {
+        this._container.unbindAll();
+        this._container = null;
+    }
+    isBound(identifier) {
+        return this._container.isBound(identifier);
+    }
     resolve(identifier) {
         this.assertNotDisposed();
         try {
@@ -44,9 +51,8 @@ class DependencyContainer {
             return null;
         }
     }
-    dispose() {
-        this._container.unbindAll();
-        this._container = null;
+    unbind(identifier) {
+        this._container.unbind(identifier);
     }
     assertNotDisposed() {
         if (!this._container) {

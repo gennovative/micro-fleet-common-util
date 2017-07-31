@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { expect } from 'chai';
 import { Container } from 'inversify';
 
-import { injectable, inject, DependencyContainer } from '../app';
+import { injectable, inject, IDependencyContainer, DependencyContainer } from '../app';
 
 const NAME = 'gennova',
 	IDENTIFIER = Symbol('abc');
@@ -23,10 +23,10 @@ class Dummy implements IDummy {
 
 describe('DependencyContainer', () => {
 	describe('bindConstant', () => {
-		it('should return same value everytime', () => {
+		it('Should return same value everytime', () => {
 			// Arrange
 			const VALUE = 'abc';
-			let container = new DependencyContainer(),
+			let container: IDependencyContainer = new DependencyContainer(),
 				internalContainer: Container = container['_container'];
 			
 			// Act
@@ -47,11 +47,11 @@ describe('DependencyContainer', () => {
 			expect(instance_2nd).to.equal(instance_3rd); // instance_2nd === instance_3rd
 		});
 		
-		it('should override previous binding with same identifier', () => {
+		it('Should override previous binding with same identifier', () => {
 			// Arrange
 			const VALUE_OLD = 'abc',
 				VALUE_NEW = 'xyz';
-			let container = new DependencyContainer(),
+			let container: IDependencyContainer = new DependencyContainer(),
 				internalContainer: Container = container['_container'];
 			
 			// Act
@@ -75,9 +75,9 @@ describe('DependencyContainer', () => {
 	}); // describe 'bindConstant'
 
 	describe('bind', () => {
-		it('should register dependency to internal container, with string identifier', () => {
+		it('Should register dependency to internal container, with string identifier', () => {
 			// Arrange
-			let container = new DependencyContainer(),
+			let container: IDependencyContainer = new DependencyContainer(),
 				internalContainer: Container = container['_container'],
 				resolveInstance: IDummy;
 			
@@ -90,9 +90,9 @@ describe('DependencyContainer', () => {
 			expect(resolveInstance.getName()).to.equal(NAME);
 		});
 		
-		it('should register dependency to internal container, with symbol identifier', () => {
+		it('Should register dependency to internal container, with symbol identifier', () => {
 			// Arrange
-			let container = new DependencyContainer(),
+			let container: IDependencyContainer = new DependencyContainer(),
 				internalContainer: Container = container['_container'],
 				resolveInstance: IDummy;
 			
@@ -105,9 +105,9 @@ describe('DependencyContainer', () => {
 			expect(resolveInstance.getName()).to.equal(NAME);
 		});
 		
-		it('should return same instance everytime, when registering as singleton', () => {
+		it('Should return same instance everytime, when registering as singleton', () => {
 			// Arrange
-			let container = new DependencyContainer(),
+			let container: IDependencyContainer = new DependencyContainer(),
 				internalContainer: Container = container['_container'];
 			
 			// Act
@@ -131,9 +131,9 @@ describe('DependencyContainer', () => {
 			expect(instance_3rd.getName()).to.equal(NAME);
 		});
 		
-		it('should create new instance everytime, when registering as transient', () => {
+		it('Should create new instance everytime, when registering as transient', () => {
 			// Arrange
-			let container = new DependencyContainer(),
+			let container: IDependencyContainer = new DependencyContainer(),
 				internalContainer: Container = container['_container'];
 			
 			// Act
@@ -158,39 +158,10 @@ describe('DependencyContainer', () => {
 		});
 	}); // describe 'bind'
 	
-	describe('resolve', () => {
-		it('should get dependency from internal container', () => {
-			// Arrange
-			let container = new DependencyContainer(),
-				internalContainer: Container = container['_container'],
-				resolveInstance: IDummy;
-			
-			// Act
-			internalContainer.bind<IDummy>(IDENTIFIER).to(Dummy);
-
-			// Assert
-			resolveInstance = container.resolve<IDummy>(IDENTIFIER);
-			expect(resolveInstance).to.be.not.null;
-			expect(resolveInstance.getName()).to.equal(NAME);
-		});
-		
-		it('should return null if no dependency is found', () => {
-			// Arrange
-			let container = new DependencyContainer(),
-				resolveInstance: IDummy;
-			
-			// Act
-			resolveInstance = container.resolve<IDummy>(IDENTIFIER);
-
-			// Assert
-			expect(resolveInstance).to.be.null;
-		});
-	}); // describe 'resolve'
-	
 	describe('dispose', () => {
-		it('should throw exception if called after disposal', () => {
+		it('Should throw exception if called after disposal', () => {
 			// Arrange
-			let container = new DependencyContainer();
+			let container: IDependencyContainer = new DependencyContainer();
 			container.bind<IDummy>(IDENTIFIER, Dummy);
 			
 			// Act
@@ -208,4 +179,75 @@ describe('DependencyContainer', () => {
 			expect(exception).to.equal('Container has been disposed!');
 		});
 	}); // describe 'dispose'
+
+	describe('resolve', () => {
+		it('Should get dependency from internal container', () => {
+			// Arrange
+			let container: IDependencyContainer = new DependencyContainer(),
+				internalContainer: Container = container['_container'],
+				resolveInstance: IDummy;
+			
+			// Act
+			internalContainer.bind<IDummy>(IDENTIFIER).to(Dummy);
+
+			// Assert
+			resolveInstance = container.resolve<IDummy>(IDENTIFIER);
+			expect(resolveInstance).to.be.not.null;
+			expect(resolveInstance.getName()).to.equal(NAME);
+		});
+		
+		it('Should return null if no dependency is found', () => {
+			// Arrange
+			let container: IDependencyContainer = new DependencyContainer(),
+				resolveInstance: IDummy;
+			
+			// Act
+			resolveInstance = container.resolve<IDummy>(IDENTIFIER);
+
+			// Assert
+			expect(resolveInstance).to.be.null;
+		});
+	}); // describe 'resolve'
+	
+	describe('isBound', () => {
+		it('Should check if a dependency is bound or not.', () => {
+			// Arrange
+			let container: IDependencyContainer = new DependencyContainer(),
+				internalContainer: Container = container['_container'];
+			
+			// Act
+			internalContainer.bind<IDummy>(IDENTIFIER).to(Dummy);
+			// Assert
+			expect(container.isBound(IDENTIFIER)).to.be.true;
+
+			// Act
+			internalContainer.unbind(IDENTIFIER);
+			// Assert
+			expect(container.isBound(IDENTIFIER)).to.be.false;
+		});
+	}); // describe 'isBound'
+	
+	describe('unbind', () => {
+		it('Should not resolve unbound dependency anymore.', () => {
+			// Arrange
+			let container: IDependencyContainer = new DependencyContainer(),
+				internalContainer: Container = container['_container'];
+			
+			internalContainer.bind<IDummy>(IDENTIFIER).to(Dummy);
+			expect(internalContainer.isBound(IDENTIFIER)).to.be.true;
+
+			// Act
+			container.unbind(IDENTIFIER);
+
+			// Assert
+			let resolved;
+			try {
+				resolved = internalContainer.get<IDummy>(IDENTIFIER);
+				expect(resolved).not.to.exist;
+			} catch (err) {
+				expect(err.message).to.contain('No matching bindings');
+			}
+			expect(internalContainer.isBound(IDENTIFIER)).to.be.false;
+		});
+	}); // describe 'isBound'
 });

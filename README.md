@@ -18,10 +18,12 @@ If your package uses `inject`, `injectable`, or `DependencyContainer`, must add 
 `gulp release`: To transpile and create `app.d.ts` definition file.
 
 ## VERSIONS
+
 ### 1.0.0
 - Added Types constants.
 - Added AutoMapper definition.
 - Added one parameter to Exception constructor.
+- Added `isBound` and `unbind` functions to `DependencyContainer`.
 - Added more functions to Guard. (breaking change)
 - Renamed IAdapter to IAddOn. (breaking change)
 - **Testing coverage**: 100%
