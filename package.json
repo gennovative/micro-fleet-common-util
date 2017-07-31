@@ -5,10 +5,10 @@
   "description": "Shared utility classes used by all other packages.",
   "main": "./dist/app/index.js",
   "types": "./typings/app.d.ts",
+  "repository": "git@bitbucket.org:firstinteractive/back-lib-common-util.git",
   "engines": {
     "node": "~7.10.1"
   },
-  "repository": "git@bitbucket.org:firstinteractive/back-lib-common-util.git",
   "dependencies": {
     "automapper-ts": "^1.8.2",
     "inversify": "^4.3.0",
