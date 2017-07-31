@@ -160,6 +160,14 @@ declare module 'back-lib-common-util/DependencyContainer' {
 	     */
 	    bindConstant<T>(identifier: string | symbol, value: T): any;
 	    /**
+	     * Gets rid of all registered dependencies.
+	     */
+	    dispose(): void;
+	    /**
+	     * Checks if an identifier is bound with any dependency.
+	     */
+	    isBound(identifier: string | symbol): boolean;
+	    /**
 	     * Retrieves an instance of dependency with all its own dependencies resolved.
 	     * @param {string | Symbol} - The key that was used to register before.
 	     *
@@ -167,16 +175,18 @@ declare module 'back-lib-common-util/DependencyContainer' {
 	     */
 	    resolve<T>(identifier: string | symbol): T;
 	    /**
-	     * Gets rid of all registered dependencies.
+	     * Gets rid of the dependency related to this identifier.
 	     */
-	    dispose(): void;
+	    unbind(identifier: string | symbol): void;
 	}
 	export class DependencyContainer {
 	    	    constructor();
 	    bind<TInterface>(identifier: string | symbol, constructor: INewable<TInterface>): BindingScope<TInterface>;
 	    bindConstant<T>(identifier: string | symbol, value: T): void;
-	    resolve<T>(identifier: string | symbol): T;
 	    dispose(): void;
+	    isBound(identifier: string | symbol): boolean;
+	    resolve<T>(identifier: string | symbol): T;
+	    unbind(identifier: string | symbol): void;
 	    	    	}
 
 }
