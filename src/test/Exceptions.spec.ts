@@ -1,13 +1,13 @@
 import { expect } from 'chai';
 
 
-import { Exception, CriticalException, MinorException, InvalidArgumentException } from '../app';
+import * as app from '../app';
 
 describe('Exception', () => {
 	it('`name` getter and setter should work', () => {
 		// Arrange
 		const NAME = 'error';
-		let ex = new Exception();
+		let ex = new app.Exception();
 
 		// Act
 		ex.name = NAME; // setter
@@ -19,7 +19,7 @@ describe('Exception', () => {
 
 	it('`stack` should have value right after exception is created.', () => {
 		// Arrange
-		let ex = new Exception();
+		let ex = new app.Exception();
 
 		// Act
 		let stack = ex.stack;
@@ -31,7 +31,7 @@ describe('Exception', () => {
 	it('`message` getter should work.', () => {
 		// Arrange
 		const MSG = 'An error occurs';
-		let ex = new Exception(MSG);
+		let ex = new app.Exception(MSG);
 
 		// Act
 		let message = ex.message;
@@ -43,7 +43,7 @@ describe('Exception', () => {
 	it('`isCritical` getter should work.', () => {
 		// Arrange
 		const MSG = 'An error occurs';
-		let ex = new Exception(MSG, true);
+		let ex = new app.Exception(MSG, true);
 
 		// Act
 		let isCritical = ex.isCritical;
@@ -55,7 +55,7 @@ describe('Exception', () => {
 	it('`toString` should work for critical exception.', () => {
 		// Arrange
 		const MSG = 'An error occurs';
-		let ex = new Exception(MSG, true);
+		let ex = new app.Exception(MSG, true);
 
 		// Act
 		let myString = ex.toString();
@@ -67,7 +67,7 @@ describe('Exception', () => {
 	it('`toString` should work for minor exception.', () => {
 		// Arrange
 		const MSG = 'An error occurs';
-		let ex = new Exception(MSG, false);
+		let ex = new app.Exception(MSG, false);
 
 		// Act
 		let myString = ex.toString();
@@ -78,7 +78,7 @@ describe('Exception', () => {
 
 	it('`toString` should work with empty message.', () => {
 		// Arrange
-		let ex = new Exception();
+		let ex = new app.Exception();
 
 		// Act
 		let myString = ex.toString();
@@ -94,7 +94,7 @@ describe('CriticalException', () => {
 		const MSG = 'An error occurs';
 
 		// Act
-		let ex = new CriticalException(MSG);
+		let ex = new app.CriticalException(MSG);
 
 		// Assert
 		expect(ex.message).to.equal(MSG);
@@ -107,7 +107,7 @@ describe('MinorException', () => {
 		const MSG = 'An error occurs';
 
 		// Act
-		let ex = new MinorException(MSG);
+		let ex = new app.MinorException(MSG);
 
 		// Assert
 		expect(ex.message).to.equal(MSG);
@@ -121,7 +121,7 @@ describe('InvalidArgumentException', () => {
 			ARG_NAME = 'age';
 
 		// Act
-		let ex = new InvalidArgumentException(ARG_NAME, MSG),
+		let ex = new app.InvalidArgumentException(ARG_NAME, MSG),
 			message = ex.message;
 
 		// Assert
@@ -134,10 +134,23 @@ describe('InvalidArgumentException', () => {
 			ARG_NAME = 'age';
 
 		// Act
-		let ex = new InvalidArgumentException(ARG_NAME),
+		let ex = new app.InvalidArgumentException(ARG_NAME),
 			message = ex.message;
 
 		// Assert
 		expect(message).to.equal(`The argument "${ARG_NAME}" is invalid! `);
 	});
 }); // describe 'InvalidArgumentException'
+
+describe('NotImplementedException', () => {
+	it('new instance should have specified message.', () => {
+		// Arrange
+		const MSG = 'This function is not supported (yet)!';
+
+		// Act
+		let ex = new app.NotImplementedException(MSG);
+
+		// Assert
+		expect(ex.message).to.equal(MSG);
+	});
+}); // describe 'NotImplementedException'

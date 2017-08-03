@@ -39,6 +39,12 @@ declare module 'back-lib-common-util/Exceptions' {
 	export class InvalidArgumentException extends Exception {
 	    constructor(argName: string, message?: string);
 	}
+	/**
+	 * Represents an error when an unimplemented method is called.
+	 */
+	export class NotImplementedException extends Exception {
+	    constructor(message?: string);
+	}
 
 }
 declare module 'back-lib-common-util/Guard' {

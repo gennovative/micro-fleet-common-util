@@ -76,3 +76,13 @@ export class InvalidArgumentException extends Exception {
 		super(`The argument "${argName}" is invalid! ${(message ? message : '')}`, true, InvalidArgumentException);
 	}
 }
+
+/**
+ * Represents an error when an unimplemented method is called.
+ */
+export class NotImplementedException extends Exception {
+	
+	constructor(message?: string) {
+		super(message, false, NotImplementedException);
+	}
+}

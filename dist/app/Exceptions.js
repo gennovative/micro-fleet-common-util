@@ -67,5 +67,14 @@ class InvalidArgumentException extends Exception {
     }
 }
 exports.InvalidArgumentException = InvalidArgumentException;
+/**
+ * Represents an error when an unimplemented method is called.
+ */
+class NotImplementedException extends Exception {
+    constructor(message) {
+        super(message, false, NotImplementedException);
+    }
+}
+exports.NotImplementedException = NotImplementedException;
 
 //# sourceMappingURL=Exceptions.js.map
