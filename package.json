@@ -10,7 +10,6 @@
     "node": "~7.10.1"
   },
   "dependencies": {
-    "automapper-ts": "^1.8.2",
     "inversify": "^4.3.0",
     "lodash": "^4.17.4",
     "reflect-metadata": "^0.1.10"
@@ -21,6 +20,7 @@
     "@types/lodash": "^4.14.52",
     "@types/mocha": "^2.2.41",
     "@types/node": "^7.0.38",
+    "automapper-ts": "^1.8.2",
     "chai": "^4.1.0",
     "chai-spies": "^0.7.1",
     "del": "^3.0.0",
