@@ -23,7 +23,7 @@ class DependencyContainer {
     }
     bind(identifier, constructor) {
         this.assertNotDisposed();
-        Guard_1.Guard.assertDefined('constructor', constructor);
+        Guard_1.Guard.assertArgDefined('constructor', constructor);
         let container = this._container, binding, scope;
         this.unboundIfDuplicate(identifier);
         binding = this._container.bind(identifier).to(constructor);
@@ -33,6 +33,13 @@ class DependencyContainer {
     bindConstant(identifier, value) {
         this.unboundIfDuplicate(identifier);
         this._container.bind(identifier).toConstantValue(value);
+    }
+    dispose() {
+        this._container.unbindAll();
+        this._container = null;
+    }
+    isBound(identifier) {
+        return this._container.isBound(identifier);
     }
     resolve(identifier) {
         this.assertNotDisposed();
@@ -44,9 +51,8 @@ class DependencyContainer {
             return null;
         }
     }
-    dispose() {
-        this._container.unbindAll();
-        this._container = null;
+    unbind(identifier) {
+        this._container.unbind(identifier);
     }
     assertNotDisposed() {
         if (!this._container) {

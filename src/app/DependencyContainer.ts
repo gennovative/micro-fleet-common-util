@@ -40,6 +40,16 @@ export interface IDependencyContainer {
 	bindConstant<T>(identifier: string | symbol, value: T);
 
 	/**
+	 * Gets rid of all registered dependencies.
+	 */
+	dispose(): void;
+
+	/**
+	 * Checks if an identifier is bound with any dependency.
+	 */
+	isBound(identifier: string | symbol): boolean;
+
+	/**
 	 * Retrieves an instance of dependency with all its own dependencies resolved.
 	 * @param {string | Symbol} - The key that was used to register before.
 	 * 
@@ -48,9 +58,9 @@ export interface IDependencyContainer {
 	resolve<T>(identifier: string | symbol): T;
 
 	/**
-	 * Gets rid of all registered dependencies.
+	 * Gets rid of the dependency related to this identifier.
 	 */
-	dispose(): void;
+	unbind(identifier: string | symbol): void;
 }
 
 export class DependencyContainer {
@@ -63,8 +73,8 @@ export class DependencyContainer {
 
 	public bind<TInterface>(identifier: string | symbol, constructor: INewable<TInterface>): BindingScope<TInterface> {
 		this.assertNotDisposed();
-		Guard.assertDefined('constructor', constructor);
-		
+		Guard.assertArgDefined('constructor', constructor);
+
 		let container = this._container,
 			binding, scope;
 		
@@ -81,6 +91,15 @@ export class DependencyContainer {
 		this._container.bind<T>(identifier).toConstantValue(value);
 	}
 
+	public dispose(): void {
+		this._container.unbindAll();
+		this._container = null;
+	}
+
+	public isBound(identifier: string | symbol): boolean {
+		return this._container.isBound(identifier);
+	}
+
 	public resolve<T>(identifier: string | symbol): T {
 		this.assertNotDisposed();
 		try {
@@ -91,9 +110,8 @@ export class DependencyContainer {
 		}
 	}
 
-	public dispose(): void {
-		this._container.unbindAll();
-		this._container = null;
+	public unbind(identifier: string | symbol): void {
+		this._container.unbind(identifier);
 	}
 
 

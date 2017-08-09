@@ -6,20 +6,44 @@ declare module 'back-lib-common-util/Exceptions' {
 	    protected _isCritical: boolean;
 	    stack: string;
 	    protected _name: string;
-	    constructor(_message?: string, _isCritical?: boolean);
+	    /**
+	     *
+	     * @param _message
+	     * @param _isCritical
+	     * @param exceptionClass {class} The exception class to exclude from stacktrace.
+	     */
+	    constructor(_message?: string, _isCritical?: boolean, exceptionClass?: Function);
 	    name: string;
 	    readonly message: string;
 	    readonly isCritical: boolean;
 	    toString(): string;
 	}
+	/**
+	 * Represents a serious problem that may cause the system in unstable state
+	 * and need restarting.
+	 */
 	export class CriticalException extends Exception {
 	    constructor(message?: string);
 	}
+	/**
+	 * Represents an acceptable problem that can be handled
+	 * and the system does not need restarting.
+	 */
 	export class MinorException extends Exception {
 	    constructor(message?: string);
 	}
+	/**
+	 * Represents an error where the provided argument of a function or constructor
+	 * is not as expected.
+	 */
 	export class InvalidArgumentException extends Exception {
 	    constructor(argName: string, message?: string);
+	}
+	/**
+	 * Represents an error when an unimplemented method is called.
+	 */
+	export class NotImplementedException extends Exception {
+	    constructor(message?: string);
 	}
 
 }
@@ -32,7 +56,7 @@ declare module 'back-lib-common-util/Guard' {
 	     * @param message {string} Optional error message.
 	     * @throws {InvalidArgumentException} If assertion fails.
 	     */
-	    static assertDefined(name: string, target: any, message?: string): void;
+	    static assertArgDefined(name: string, target: any, message?: string): void;
 	    /**
 	     * Makes sure the specified `target` is an object, array, or string which is not null or undefined.
 	     * If `target` is a string or array, it must have `length` greater than 0,
@@ -42,7 +66,7 @@ declare module 'back-lib-common-util/Guard' {
 	     * @param message {string} Optional error message.
 	     * @throws {InvalidArgumentException} If assertion fails.
 	     */
-	    static assertNotEmpty(name: string, target: any, message?: string): void;
+	    static assertArgNotEmpty(name: string, target: any, message?: string): void;
 	    /**
 	     * Makes sure the specified `target` is a function.
 	     * @param name {string} Name to include in error message if assertion fails.
@@ -50,7 +74,7 @@ declare module 'back-lib-common-util/Guard' {
 	     * @param message {string} Optional error message.
 	     * @throws {InvalidArgumentException} If assertion fails.
 	     */
-	    static assertIsFunction(name: string, target: any, message?: string): void;
+	    static assertArgFunction(name: string, target: any, message?: string): void;
 	    /**
 	     * Makes sure the specified `target` matches Regular Expression `rule`.
 	     * @param name {string} Name to include in error message if assertion fails.
@@ -58,7 +82,45 @@ declare module 'back-lib-common-util/Guard' {
 	     * @param message {string} Optional error message.
 	     * @throws {InvalidArgumentException} If assertion fails.
 	     */
-	    static assertIsMatch(name: string, rule: RegExp, target: string, message?: string): void;
+	    static assertArgMatch(name: string, rule: RegExp, target: string, message?: string): void;
+	    /**
+	     * Makes sure the specified `target` is not null or undefined.
+	     * @param target {any} Argument to check.
+	     * @param message {string} Optional error message.
+	     * @param isCritical {boolean} If true, throws CriticalException. Otherwise, throws MinorException when assertion fails.
+	     * @throws {CriticalException} If assertion fails and `isCritical` is true.
+	     * @throws {MinorException} If assertion fails and `isCritical` is false.
+	     */
+	    static assertIsDefined(target: any, message?: string, isCritical?: boolean): void;
+	    /**
+	     * Makes sure the specified `target` is an object, array, or string which is not null or undefined.
+	     * If `target` is a string or array, it must have `length` greater than 0,
+	     * If it is an object, it must have at least one property.
+	     * @param target {any} Argument to check.
+	     * @param message {string} Optional error message.
+	     * @param isCritical {boolean} If true, throws CriticalException. Otherwise, throws MinorException when assertion fails.
+	     * @throws {CriticalException} If assertion fails and `isCritical` is true.
+	     * @throws {MinorException} If assertion fails and `isCritical` is false.
+	     */
+	    static assertIsNotEmpty(target: any, message?: string, isCritical?: boolean): void;
+	    /**
+	     * Makes sure the specified `target` is a function.
+	     * @param target {any} Argument to check.
+	     * @param message {string} Optional error message.
+	     * @param isCritical {boolean} If true, throws CriticalException. Otherwise, throws MinorException when assertion fails.
+	     * @throws {CriticalException} If assertion fails and `isCritical` is true.
+	     * @throws {MinorException} If assertion fails and `isCritical` is false.
+	     */
+	    static assertIsFunction(target: any, message?: string, isCritical?: boolean): void;
+	    /**
+	     * Makes sure the specified `target` matches Regular Expression `rule`.
+	     * @param target {any} Argument to check.
+	     * @param message {string} Optional error message.
+	     * @param isCritical {boolean} If true, throws CriticalException. Otherwise, throws MinorException when assertion fails.
+	     * @throws {CriticalException} If assertion fails and `isCritical` is true.
+	     * @throws {MinorException} If assertion fails and `isCritical` is false.
+	     */
+	    static assertIsMatch(rule: RegExp, target: string, message?: string, isCritical?: boolean): void;
 	    /**
 	     * Makes sure the specified `target` is considered "truthy" based on JavaScript rule.
 	     * @param target {any} Argument to check.
@@ -81,7 +143,7 @@ declare module 'back-lib-common-util/Guard' {
 declare module 'back-lib-common-util/DependencyContainer' {
 	import { injectable, inject, interfaces } from 'inversify';
 	export class BindingScope<T> {
-	    constructor(_binding: interfaces.BindingInWhenOnSyntax<T>);
+	    	    constructor(_binding: interfaces.BindingInWhenOnSyntax<T>);
 	    asSingleton(): void;
 	    asTransient(): void;
 	}
@@ -104,6 +166,14 @@ declare module 'back-lib-common-util/DependencyContainer' {
 	     */
 	    bindConstant<T>(identifier: string | symbol, value: T): any;
 	    /**
+	     * Gets rid of all registered dependencies.
+	     */
+	    dispose(): void;
+	    /**
+	     * Checks if an identifier is bound with any dependency.
+	     */
+	    isBound(identifier: string | symbol): boolean;
+	    /**
 	     * Retrieves an instance of dependency with all its own dependencies resolved.
 	     * @param {string | Symbol} - The key that was used to register before.
 	     *
@@ -111,18 +181,19 @@ declare module 'back-lib-common-util/DependencyContainer' {
 	     */
 	    resolve<T>(identifier: string | symbol): T;
 	    /**
-	     * Gets rid of all registered dependencies.
+	     * Gets rid of the dependency related to this identifier.
 	     */
-	    dispose(): void;
+	    unbind(identifier: string | symbol): void;
 	}
 	export class DependencyContainer {
-	    private _container;
-	    constructor();
+	    	    constructor();
 	    bind<TInterface>(identifier: string | symbol, constructor: INewable<TInterface>): BindingScope<TInterface>;
 	    bindConstant<T>(identifier: string | symbol, value: T): void;
-	    resolve<T>(identifier: string | symbol): T;
 	    dispose(): void;
-	}
+	    isBound(identifier: string | symbol): boolean;
+	    resolve<T>(identifier: string | symbol): T;
+	    unbind(identifier: string | symbol): void;
+	    	    	}
 
 }
 declare module 'back-lib-common-util/Types' {
@@ -132,7 +203,7 @@ declare module 'back-lib-common-util/Types' {
 	}
 
 }
-declare module 'back-lib-common-util/' {
+declare module 'back-lib-common-util' {
 	export * from 'back-lib-common-util/DependencyContainer';
 	export * from 'back-lib-common-util/Exceptions';
 	export * from 'back-lib-common-util/Guard';
