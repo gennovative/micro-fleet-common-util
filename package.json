@@ -20,7 +20,6 @@
     "@types/lodash": "^4.14.52",
     "@types/mocha": "^2.2.41",
     "@types/node": "^7.0.38",
-    "automapper-ts": "^1.8.2",
     "chai": "^4.1.0",
     "chai-spies": "^0.7.1",
     "del": "^3.0.0",

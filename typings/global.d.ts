@@ -1,7 +1,3 @@
-/// <reference types="automapper-ts" />
-
-declare type AutoMapper = AutoMapperJs.AutoMapper;
-
 /**
  * A data type representing Json object.
  */
