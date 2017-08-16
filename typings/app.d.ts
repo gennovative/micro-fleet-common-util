@@ -184,18 +184,35 @@ declare module 'back-lib-common-util/DependencyContainer' {
 	}
 	export class DependencyContainer {
 	    	    constructor();
+	    /**
+	     * @see IDependencyContainer.bind
+	     */
 	    bind<TInterface>(identifier: string | symbol, constructor: INewable<TInterface>): BindingScope<TInterface>;
+	    /**
+	     * @see IDependencyContainer.bindConstant
+	     */
 	    bindConstant<T>(identifier: string | symbol, value: T): void;
+	    /**
+	     * @see IDependencyContainer.dispose
+	     */
 	    dispose(): void;
+	    /**
+	     * @see IDependencyContainer.isBound
+	     */
 	    isBound(identifier: string | symbol): boolean;
+	    /**
+	     * @see IDependencyContainer.resolve
+	     */
 	    resolve<T>(identifier: string | symbol): T;
+	    /**
+	     * @see IDependencyContainer.unbind
+	     */
 	    unbind(identifier: string | symbol): void;
 	    	    	}
 
 }
 declare module 'back-lib-common-util/Types' {
 	export class Types {
-	    static readonly MODEL_MAPPER: symbol;
 	    static readonly DEPENDENCY_CONTAINER: symbol;
 	}
 

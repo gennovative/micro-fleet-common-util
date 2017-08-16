@@ -1,3 +1,8 @@
+/* istanbul ignore else */
+if (!Reflect || typeof Reflect['hasOwnMetadata'] !== 'function') {
+	require('reflect-metadata');
+}
+
 import { injectable, inject, Container, interfaces } from 'inversify';
 import { Guard } from './Guard';
 
@@ -66,11 +71,14 @@ export interface IDependencyContainer {
 export class DependencyContainer {
 	private _container: Container;
 
-	// TODO: Should be singleton
 	constructor() {
 		this._container = new Container();
 	}
 
+
+	/**
+	 * @see IDependencyContainer.bind 
+	 */
 	public bind<TInterface>(identifier: string | symbol, constructor: INewable<TInterface>): BindingScope<TInterface> {
 		this.assertNotDisposed();
 		Guard.assertArgDefined('constructor', constructor);
@@ -86,20 +94,32 @@ export class DependencyContainer {
 		return scope;
 	}
 
+	/**
+	 * @see IDependencyContainer.bindConstant 
+	 */
 	public bindConstant<T>(identifier: string | symbol, value: T): void {
 		this.unboundIfDuplicate(identifier);
 		this._container.bind<T>(identifier).toConstantValue(value);
 	}
 
+	/**
+	 * @see IDependencyContainer.dispose 
+	 */
 	public dispose(): void {
 		this._container.unbindAll();
 		this._container = null;
 	}
 
+	/**
+	 * @see IDependencyContainer.isBound 
+	 */
 	public isBound(identifier: string | symbol): boolean {
 		return this._container.isBound(identifier);
 	}
 
+	/**
+	 * @see IDependencyContainer.resolve 
+	 */
 	public resolve<T>(identifier: string | symbol): T {
 		this.assertNotDisposed();
 		try {
@@ -110,6 +130,9 @@ export class DependencyContainer {
 		}
 	}
 
+	/**
+	 * @see IDependencyContainer.unbind 
+	 */
 	public unbind(identifier: string | symbol): void {
 		this._container.unbind(identifier);
 	}
