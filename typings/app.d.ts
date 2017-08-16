@@ -2,20 +2,17 @@
 
 declare module 'back-lib-common-util/Exceptions' {
 	export class Exception implements Error {
-	    protected _message: string;
-	    protected _isCritical: boolean;
-	    stack: string;
-	    protected _name: string;
-	    /**
-	     *
-	     * @param _message
-	     * @param _isCritical
-	     * @param exceptionClass {class} The exception class to exclude from stacktrace.
-	     */
-	    constructor(_message?: string, _isCritical?: boolean, exceptionClass?: Function);
-	    name: string;
 	    readonly message: string;
 	    readonly isCritical: boolean;
+	    stack: string;
+	    name: string;
+	    /**
+	     *
+	     * @param message
+	     * @param isCritical
+	     * @param exceptionClass {class} The exception class to exclude from stacktrace.
+	     */
+	    constructor(message?: string, isCritical?: boolean, exceptionClass?: Function);
 	    toString(): string;
 	}
 	/**

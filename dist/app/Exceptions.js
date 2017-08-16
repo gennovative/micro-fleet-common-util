@@ -4,28 +4,14 @@ Error.stackTraceLimit = 20;
 class Exception {
     /**
      *
-     * @param _message
-     * @param _isCritical
+     * @param message
+     * @param isCritical
      * @param exceptionClass {class} The exception class to exclude from stacktrace.
      */
-    constructor(_message, _isCritical, exceptionClass) {
-        this._message = _message;
-        this._isCritical = _isCritical;
-        this.stack = '';
-        this._name = '';
+    constructor(message = '', isCritical = true, exceptionClass) {
+        this.message = message;
+        this.isCritical = isCritical;
         Error.captureStackTrace(this, exceptionClass || Exception);
-    }
-    get name() {
-        return this._name;
-    }
-    set name(value) {
-        this._name = value;
-    }
-    get message() {
-        return this._message;
-    }
-    get isCritical() {
-        return this._isCritical;
     }
     toString() {
         // Ex 1: [Critical] A big mess has happened!
@@ -33,7 +19,7 @@ class Exception {
         //
         // Ex 2: [Minor]
         //		 <stacktrace here>
-        return `[${(this._isCritical ? 'Critical' : 'Minor')}] ${this._message ? this._message : ''} \n ${this.stack}`;
+        return `[${(this.isCritical ? 'Critical' : 'Minor')}] ${this.message ? this.message : ''} \n ${this.stack}`;
     }
 }
 exports.Exception = Exception;
@@ -44,6 +30,7 @@ exports.Exception = Exception;
 class CriticalException extends Exception {
     constructor(message) {
         super(message, false, CriticalException);
+        this.name = 'CriticalException';
     }
 }
 exports.CriticalException = CriticalException;
@@ -54,6 +41,7 @@ exports.CriticalException = CriticalException;
 class MinorException extends Exception {
     constructor(message) {
         super(message, false, MinorException);
+        this.name = 'MinorException';
     }
 }
 exports.MinorException = MinorException;
@@ -64,6 +52,7 @@ exports.MinorException = MinorException;
 class InvalidArgumentException extends Exception {
     constructor(argName, message) {
         super(`The argument "${argName}" is invalid! ${(message ? message : '')}`, true, InvalidArgumentException);
+        this.name = 'InvalidArgumentException';
     }
 }
 exports.InvalidArgumentException = InvalidArgumentException;
@@ -73,6 +62,7 @@ exports.InvalidArgumentException = InvalidArgumentException;
 class NotImplementedException extends Exception {
     constructor(message) {
         super(message, false, NotImplementedException);
+        this.name = 'NotImplementedException';
     }
 }
 exports.NotImplementedException = NotImplementedException;

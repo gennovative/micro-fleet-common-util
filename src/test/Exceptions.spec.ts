@@ -4,19 +4,6 @@ import { expect } from 'chai';
 import * as app from '../app';
 
 describe('Exception', () => {
-	it('`name` getter and setter should work', () => {
-		// Arrange
-		const NAME = 'error';
-		let ex = new app.Exception();
-
-		// Act
-		ex.name = NAME; // setter
-		let myName = ex.name; // getter
-
-		// Assert
-		expect(myName).to.equal(NAME);
-	});
-
 	it('`stack` should have value right after exception is created.', () => {
 		// Arrange
 		let ex = new app.Exception();
@@ -28,30 +15,6 @@ describe('Exception', () => {
 		expect(stack).not.to.be.undefined;
 	});
 
-	it('`message` getter should work.', () => {
-		// Arrange
-		const MSG = 'An error occurs';
-		let ex = new app.Exception(MSG);
-
-		// Act
-		let message = ex.message;
-
-		// Assert
-		expect(message).not.to.be.undefined;
-	});
-	
-	it('`isCritical` getter should work.', () => {
-		// Arrange
-		const MSG = 'An error occurs';
-		let ex = new app.Exception(MSG, true);
-
-		// Act
-		let isCritical = ex.isCritical;
-
-		// Assert
-		expect(isCritical).to.be.true;
-	});
-	
 	it('`toString` should work for critical exception.', () => {
 		// Arrange
 		const MSG = 'An error occurs';
@@ -84,7 +47,7 @@ describe('Exception', () => {
 		let myString = ex.toString();
 
 		// Assert
-		expect(myString).to.contain(`[Minor] `);
+		expect(myString).to.contain(`[Critical] `);
 	});
 }); // describe 'Exception'
 
