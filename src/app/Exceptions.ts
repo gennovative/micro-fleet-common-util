@@ -3,35 +3,21 @@ Error.stackTraceLimit = 20;
 export class Exception implements Error {
 
 	public stack: string;
+	public name: string;
 
-	protected _name: string;
 
 	/**
 	 * 
-	 * @param _message 
-	 * @param _isCritical 
+	 * @param message 
+	 * @param isCritical 
 	 * @param exceptionClass {class} The exception class to exclude from stacktrace.
 	 */
-	constructor(protected _message?: string, protected _isCritical?: boolean, exceptionClass?: Function) {
-		this.stack = '';
-		this._name = '';
+	constructor(
+			public readonly message: string = '',
+			public readonly isCritical: boolean = true,
+			exceptionClass?: Function) {
+
 		Error.captureStackTrace(this, exceptionClass || Exception);
-	}
-
-	public get name(): string {
-		return this._name;
-	}
-
-	public set name(value: string) {
-		this._name = value;
-	}
-
-	public get message(): string {
-		return this._message;
-	}
-
-	public get isCritical(): boolean {
-		return this._isCritical;
 	}
 
 	public toString(): string {
@@ -40,7 +26,7 @@ export class Exception implements Error {
 		//
 		// Ex 2: [Minor]
 		//		 <stacktrace here>
-		return `[${ (this._isCritical ? 'Critical' : 'Minor') }] ${ this._message ? this._message : '' } \n ${this.stack}`;
+		return `[${ (this.isCritical ? 'Critical' : 'Minor') }] ${ this.message ? this.message : '' } \n ${this.stack}`;
 	}
 }
 
@@ -52,6 +38,7 @@ export class CriticalException extends Exception {
 
 	constructor(message?: string) {
 		super(message, false, CriticalException);
+		this.name = 'CriticalException';
 	}
 }
 
@@ -63,6 +50,7 @@ export class MinorException extends Exception {
 
 	constructor(message?: string) {
 		super(message, false, MinorException);
+		this.name = 'MinorException';
 	}
 }
 
@@ -74,6 +62,7 @@ export class InvalidArgumentException extends Exception {
 
 	constructor(argName: string, message?: string) {
 		super(`The argument "${argName}" is invalid! ${(message ? message : '')}`, true, InvalidArgumentException);
+		this.name = 'InvalidArgumentException';
 	}
 }
 
@@ -84,5 +73,6 @@ export class NotImplementedException extends Exception {
 	
 	constructor(message?: string) {
 		super(message, false, NotImplementedException);
+		this.name = 'NotImplementedException';
 	}
 }
