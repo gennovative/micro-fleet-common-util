@@ -7,6 +7,7 @@ if (!Reflect || typeof Reflect['hasOwnMetadata'] !== 'function') {
 const inversify_1 = require("inversify");
 exports.injectable = inversify_1.injectable;
 exports.inject = inversify_1.inject;
+exports.decorate = inversify_1.decorate;
 const Guard_1 = require("./Guard");
 class BindingScope {
     constructor(_binding) {

@@ -1,6 +1,6 @@
 /// <reference path="./global.d.ts" />
 
-declare module 'back-lib-common-util/Exceptions' {
+declare module 'back-lib-common-util/dist/app/Exceptions' {
 	export class Exception implements Error {
 	    readonly message: string;
 	    readonly isCritical: boolean;
@@ -44,7 +44,7 @@ declare module 'back-lib-common-util/Exceptions' {
 	}
 
 }
-declare module 'back-lib-common-util/Guard' {
+declare module 'back-lib-common-util/dist/app/Guard' {
 	export class Guard {
 	    /**
 	     * Makes sure the specified `target` is not null or undefined.
@@ -137,14 +137,14 @@ declare module 'back-lib-common-util/Guard' {
 	}
 
 }
-declare module 'back-lib-common-util/DependencyContainer' {
-	import { injectable, inject, interfaces } from 'inversify';
+declare module 'back-lib-common-util/dist/app/DependencyContainer' {
+	import { injectable, inject, decorate, interfaces } from 'inversify';
 	export class BindingScope<T> {
 	    	    constructor(_binding: interfaces.BindingInWhenOnSyntax<T>);
 	    asSingleton(): void;
 	    asTransient(): void;
 	}
-	export { injectable, inject };
+	export { injectable, inject, decorate };
 	export interface INewable<T> extends interfaces.Newable<T> {
 	}
 	export interface IDependencyContainer {
@@ -211,16 +211,48 @@ declare module 'back-lib-common-util/DependencyContainer' {
 	    	    	}
 
 }
-declare module 'back-lib-common-util/Types' {
+declare module 'back-lib-common-util/dist/app/HandlerContainer' {
+	import { IDependencyContainer } from 'back-lib-common-util/dist/app/DependencyContainer';
+	export type ActionFactory = (obj, action: string) => Function;
+	export type HandlerDetails = {
+	    dependencyIdentifier: string | symbol;
+	    actionFactory?: ActionFactory;
+	};
+	export class HandlerContainer {
+	    	    static readonly instance: HandlerContainer;
+	    	    	    	    dependencyContainer: IDependencyContainer;
+	    /**
+	     * Removes all registered handlers
+	     */
+	    clear(): void;
+	    /**
+	     * Binds an action or some actions to a `dependencyIdentifier`, which is resolved to an object instance.
+	     * A proxy function of some proxy functions that when called, will delegates to the actual resolved function.
+	     *
+	     * @param {string} actions Function name of the resolved object.
+	     * @param {string | symbol} dependencyIdentifier Key to look up and resolve from dependency container.
+	     * @param {ActionFactory} actionFactory A function that use `actions` name to produce the actual function to be executed.
+	     */
+	    register(actions: string | string[], dependencyIdentifier: string | symbol, actionFactory?: ActionFactory): Function & Function[];
+	    /**
+	     * Looks up and returns a function that was registered to bind with `action`.
+	     * @param action Key to look up.
+	     */
+	    resolve(action: string): Function;
+	    	}
+
+}
+declare module 'back-lib-common-util/dist/app/Types' {
 	export class Types {
 	    static readonly DEPENDENCY_CONTAINER: symbol;
 	}
 
 }
 declare module 'back-lib-common-util' {
-	export * from 'back-lib-common-util/DependencyContainer';
-	export * from 'back-lib-common-util/Exceptions';
-	export * from 'back-lib-common-util/Guard';
-	export * from 'back-lib-common-util/Types';
+	export * from 'back-lib-common-util/dist/app/DependencyContainer';
+	export * from 'back-lib-common-util/dist/app/Exceptions';
+	export * from 'back-lib-common-util/dist/app/Guard';
+	export * from 'back-lib-common-util/dist/app/HandlerContainer';
+	export * from 'back-lib-common-util/dist/app/Types';
 
 }
