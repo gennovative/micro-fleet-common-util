@@ -35,18 +35,21 @@ class HandlerContainer {
     register(actions, dependencyIdentifier, actionFactory) {
         Guard_1.Guard.assertArgDefined('action', actions);
         Guard_1.Guard.assertArgDefined('dependencyIdentifier', dependencyIdentifier);
-        let proxyFunctions = [], proxy;
-        actions = Array.isArray(actions) ? actions : [actions];
-        for (let a of actions) {
-            this._handlers[a] = { dependencyIdentifier, actionFactory };
-            proxy = (function (action, context) {
+        let fn = function (act) {
+            this._handlers[act] = { dependencyIdentifier, actionFactory };
+            let proxy = (function (action, context) {
                 return function () {
                     return context.resolve(action).apply(null, arguments);
                 };
-            })(a, this);
-            proxyFunctions.push(proxy);
+            })(act, this);
+            return proxy;
+        }.bind(this);
+        if (Array.isArray(actions)) {
+            return actions.map(fn);
         }
-        return (proxyFunctions.length == 1) ? proxyFunctions[0] : proxyFunctions;
+        else {
+            return fn(actions);
+        }
     }
     /**
      * Looks up and returns a function that was registered to bind with `action`.

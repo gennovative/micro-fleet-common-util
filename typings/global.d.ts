@@ -23,7 +23,13 @@ declare interface IServiceAddOn {
 	init(): Promise<void>;
 	
 	/**
+	 * Invoked before `dispose` is called.
+	 */
+	deadLetter(): Promise<void>;
+
+	/**
 	 * Stops this add-on and cleans all resources.
 	 */
 	dispose(): Promise<void>;
+
 }
