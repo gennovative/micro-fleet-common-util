@@ -57,20 +57,21 @@ export class HandlerContainer {
 		Guard.assertArgDefined('action', actions);
 		Guard.assertArgDefined('dependencyIdentifier', dependencyIdentifier);
 
-		let proxyFunctions = [],
-			proxy;
-		actions = Array.isArray(actions) ? actions : [actions];
-		for (let a of actions) {
-			this._handlers[a] = { dependencyIdentifier, actionFactory };
-			proxy = (function(action: string, context: HandlerContainer) {
-				return function() {
-					return context.resolve(action).apply(null, arguments);
-				};
-			})(a, this);
-			proxyFunctions.push(proxy);
-		}
+		let fn = function(act: string): Function {
+			this._handlers[act] = { dependencyIdentifier, actionFactory };
+			let proxy = (function(action: string, context: HandlerContainer) {
+					return function() {
+						return context.resolve(action).apply(null, arguments);
+					};
+				})(act, this);
+			return proxy;
+		}.bind(this);
 
-		return (proxyFunctions.length == 1) ? proxyFunctions[0] : proxyFunctions;
+		if (Array.isArray(actions)) {
+			return <any>actions.map(fn);
+		} else {
+			return fn(actions);
+		}
 	}
 
 	/**
