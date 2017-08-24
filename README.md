@@ -1,8 +1,6 @@
 # Gennova backend common utility
 
-## USAGE
-
-If your package uses `inject`, `injectable`, or `DependencyContainer`, must add `import 'reflect-metadata';` once at the startup file of your package.
+Shared utility classes used by all other packages.
 
 ## INSTALLATION
 
@@ -19,13 +17,19 @@ If your package uses `inject`, `injectable`, or `DependencyContainer`, must add 
 
 ## VERSIONS
 
+### 1.1.0
+- Added `BigIdGenerator` to generate bigint IDs.
+- Added `HandlerContainer` to keep and resolve action handlers.
+- Added file `.npmignore`.
+- **Testing coverage**: 100%
+
 ### 1.0.0
 - Added Types constants.
 - Added AutoMapper definition.
 - Added one parameter to Exception constructor.
 - Added `isBound` and `unbind` functions to `DependencyContainer`.
 - Added more functions to Guard. (breaking change)
-- Renamed IAdapter to IAddOn. (breaking change)
+- Renamed IAdapter to IServiceAddOn. (breaking change)
 - **Testing coverage**: 100%
 
 ### 0.1.0

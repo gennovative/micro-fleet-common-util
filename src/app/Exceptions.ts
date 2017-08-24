@@ -37,7 +37,7 @@ export class Exception implements Error {
 export class CriticalException extends Exception {
 
 	constructor(message?: string) {
-		super(message, false, CriticalException);
+		super(message, true, CriticalException);
 		this.name = 'CriticalException';
 	}
 }
@@ -61,7 +61,7 @@ export class MinorException extends Exception {
 export class InvalidArgumentException extends Exception {
 
 	constructor(argName: string, message?: string) {
-		super(`The argument "${argName}" is invalid! ${(message ? message : '')}`, true, InvalidArgumentException);
+		super(`The argument "${argName}" is invalid! ${(message ? message : '')}`, false, InvalidArgumentException);
 		this.name = 'InvalidArgumentException';
 	}
 }
