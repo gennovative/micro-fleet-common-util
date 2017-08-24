@@ -1,15 +1,18 @@
 {
   "name": "back-lib-common-util",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Shared utility classes used by all other packages.",
   "main": "./dist/app/index.js",
   "types": "./typings/app.d.ts",
   "repository": "git@bitbucket.org:firstinteractive/back-lib-common-util.git",
   "engines": {
-    "node": "~7.10.1"
+    "node": "~7.10.1",
+    "npm": "~4.6.1"
   },
   "dependencies": {
+    "flake-idgen": "^1.1.0",
+    "int64-buffer": "^0.1.9",
     "inversify": "^4.3.0",
     "lodash": "^4.17.4",
     "reflect-metadata": "^0.1.10"
@@ -17,6 +20,7 @@
   "devDependencies": {
     "@types/chai": "^4.0.1",
     "@types/chai-spies": "0.0.0",
+    "@types/flake-idgen": "^0.1.30",
     "@types/lodash": "^4.14.52",
     "@types/mocha": "^2.2.41",
     "@types/node": "^7.0.38",
