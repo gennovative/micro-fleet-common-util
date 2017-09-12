@@ -76,3 +76,14 @@ export class NotImplementedException extends Exception {
 		this.name = 'NotImplementedException';
 	}
 }
+
+/**
+ * Represents an error when an unimplemented method is called.
+ */
+export class InternalErrorException extends Exception {
+	
+	constructor(message?: string) {
+		super(message || 'An error occured on the 3rd-party side', false, InternalErrorException);
+		this.name = 'InternalErrorException';
+	}
+}

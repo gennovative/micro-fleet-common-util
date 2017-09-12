@@ -18,7 +18,7 @@ Shared utility classes used by all other packages.
 ## VERSIONS
 
 ### 1.1.0
-- Added `BigIdGenerator` to generate bigint IDs.
+- Added `InternalErrorException`.
 - Added `HandlerContainer` to keep and resolve action handlers.
 - Added file `.npmignore`.
 - **Testing coverage**: 100%

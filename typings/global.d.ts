@@ -12,24 +12,6 @@ declare type PromiseResolveFn = (value?: any | PromiseLike<any>) => void;
 declare type PromiseRejectFn = (reason?: any) => void;
 
 /**
- * If an object wants to be initialized when microservice proccess starts, it must
- * implements this interface to be able to add to add-on list.
+ * A data type representing a class.
  */
-declare interface IServiceAddOn {
-	/**
-	 * Initializes this add-on.
-	 * @returns A promise that resolves `true` if success, rejects if otherwise.
-	 */
-	init(): Promise<void>;
-	
-	/**
-	 * Invoked before `dispose` is called.
-	 */
-	deadLetter(): Promise<void>;
-
-	/**
-	 * Stops this add-on and cleans all resources.
-	 */
-	dispose(): Promise<void>;
-
-}
+declare type Newable = (new () => any);
