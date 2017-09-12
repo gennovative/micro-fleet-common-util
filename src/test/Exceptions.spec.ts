@@ -117,3 +117,24 @@ describe('NotImplementedException', () => {
 		expect(ex.message).to.equal(MSG);
 	});
 }); // describe 'NotImplementedException'
+
+describe('InternalErrorException', () => {
+	it('new instance should have specified message.', () => {
+		// Arrange
+		const MSG = 'An error occurs';
+
+		// Act
+		let ex = new app.InternalErrorException(MSG);
+
+		// Assert
+		expect(ex.message).to.equal(MSG);
+	});
+	
+	it('new instance should work without specified message.', () => {
+		// Act
+		let ex = new app.InternalErrorException();
+
+		// Assert
+		expect(ex.message).to.equal('An error occured on the 3rd-party side');
+	});
+}); // describe 'InvalidArgumentException'

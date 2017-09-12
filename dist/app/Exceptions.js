@@ -29,7 +29,7 @@ exports.Exception = Exception;
  */
 class CriticalException extends Exception {
     constructor(message) {
-        super(message, false, CriticalException);
+        super(message, true, CriticalException);
         this.name = 'CriticalException';
     }
 }
@@ -51,7 +51,7 @@ exports.MinorException = MinorException;
  */
 class InvalidArgumentException extends Exception {
     constructor(argName, message) {
-        super(`The argument "${argName}" is invalid! ${(message ? message : '')}`, true, InvalidArgumentException);
+        super(`The argument "${argName}" is invalid! ${(message ? message : '')}`, false, InvalidArgumentException);
         this.name = 'InvalidArgumentException';
     }
 }
@@ -66,5 +66,15 @@ class NotImplementedException extends Exception {
     }
 }
 exports.NotImplementedException = NotImplementedException;
+/**
+ * Represents an error when an unimplemented method is called.
+ */
+class InternalErrorException extends Exception {
+    constructor(message) {
+        super(message || 'An error occured on the 3rd-party side', false, InternalErrorException);
+        this.name = 'InternalErrorException';
+    }
+}
+exports.InternalErrorException = InternalErrorException;
 
 //# sourceMappingURL=Exceptions.js.map
