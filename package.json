@@ -1,7 +1,7 @@
 {
   "name": "back-lib-common-util",
   "private": true,
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Shared utility classes used by all other packages.",
   "main": "./dist/app/index.js",
   "types": "./typings/app.d.ts",
@@ -46,6 +46,6 @@
     "mocha": "^3.4.2",
     "remap-istanbul": "^0.9.5",
     "tslint": "^5.5.0",
-    "typescript": "^2.4.2"
+    "typescript": "^2.5.2"
   }
 }

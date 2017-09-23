@@ -47,7 +47,7 @@ export class HandlerContainer {
 
 	/**
 	 * Binds an action or some actions to a `dependencyIdentifier`, which is resolved to an object instance.
-	 * A proxy function of some proxy functions that when called, will delegates to the actual resolved function.
+	 * Returns a/some proxy function(s) which when called, will delegates to the actual resolved function.
 	 * 
 	 * @param {string} actions Function name of the resolved object.
 	 * @param {string | symbol} dependencyIdentifier Key to look up and resolve from dependency container.
