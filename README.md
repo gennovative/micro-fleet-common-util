@@ -17,6 +17,9 @@ Shared utility classes used by all other packages.
 
 ## VERSIONS
 
+### 1.1.1
+- Exports @unmanaged annotation to fix _"Error: The number of constructor arguments in the derived class ProgramRepository must be >= than the number of constructor arguments of its base class."_
+
 ### 1.1.0
 - Added `InternalErrorException`.
 - Added `HandlerContainer` to keep and resolve action handlers.

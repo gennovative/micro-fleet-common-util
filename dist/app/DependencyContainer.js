@@ -8,6 +8,7 @@ const inversify_1 = require("inversify");
 exports.injectable = inversify_1.injectable;
 exports.inject = inversify_1.inject;
 exports.decorate = inversify_1.decorate;
+exports.unmanaged = inversify_1.unmanaged;
 const Guard_1 = require("./Guard");
 class BindingScope {
     constructor(_binding) {

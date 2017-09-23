@@ -144,13 +144,13 @@ declare module 'back-lib-common-util/dist/app/Guard' {
 
 }
 declare module 'back-lib-common-util/dist/app/DependencyContainer' {
-	import { injectable, inject, decorate, interfaces } from 'inversify';
+	import { injectable, inject, decorate, interfaces, unmanaged } from 'inversify';
 	export class BindingScope<T> {
 	    	    constructor(_binding: interfaces.BindingInWhenOnSyntax<T>);
 	    asSingleton(): void;
 	    asTransient(): void;
 	}
-	export { injectable, inject, decorate };
+	export { injectable, inject, decorate, unmanaged };
 	export interface INewable<T> extends interfaces.Newable<T> {
 	}
 	export interface IDependencyContainer {
@@ -233,7 +233,7 @@ declare module 'back-lib-common-util/dist/app/HandlerContainer' {
 	    clear(): void;
 	    /**
 	     * Binds an action or some actions to a `dependencyIdentifier`, which is resolved to an object instance.
-	     * A proxy function of some proxy functions that when called, will delegates to the actual resolved function.
+	     * Returns a/some proxy function(s) which when called, will delegates to the actual resolved function.
 	     *
 	     * @param {string} actions Function name of the resolved object.
 	     * @param {string | symbol} dependencyIdentifier Key to look up and resolve from dependency container.
