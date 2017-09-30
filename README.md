@@ -17,6 +17,9 @@ Shared utility classes used by all other packages.
 
 ## VERSIONS
 
+### 1.2.1
+- Use Bluebird to override global native Promise.
+
 ### 1.1.1
 - Exports @unmanaged annotation to fix _"Error: The number of constructor arguments in the derived class ProgramRepository must be >= than the number of constructor arguments of its base class."_
 

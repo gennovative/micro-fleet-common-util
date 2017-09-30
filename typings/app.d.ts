@@ -250,11 +250,12 @@ declare module 'back-lib-common-util/dist/app/HandlerContainer' {
 }
 declare module 'back-lib-common-util/dist/app/Types' {
 	export class Types {
-	    static readonly DEPENDENCY_CONTAINER: symbol;
+	    static readonly DEPENDENCY_CONTAINER: string;
 	}
 
 }
 declare module 'back-lib-common-util' {
+	import 'bluebird-global';
 	export * from 'back-lib-common-util/dist/app/DependencyContainer';
 	export * from 'back-lib-common-util/dist/app/Exceptions';
 	export * from 'back-lib-common-util/dist/app/Guard';
