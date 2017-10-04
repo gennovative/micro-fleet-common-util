@@ -3,7 +3,8 @@ if (!Reflect || typeof Reflect['hasOwnMetadata'] !== 'function') {
 	require('reflect-metadata');
 }
 
-import { injectable, inject, decorate, Container, interfaces, unmanaged } from 'inversify';
+import { injectable, inject, decorate, Container, interfaces, 
+	unmanaged, optional } from 'inversify';
 import { Guard } from './Guard';
 
 
@@ -23,7 +24,7 @@ export class BindingScope<T> {
 }
 
 
-export { injectable, inject, decorate, unmanaged };
+export { injectable, inject, decorate, unmanaged, optional };
 
 export interface INewable<T> extends interfaces.Newable<T> { }
 

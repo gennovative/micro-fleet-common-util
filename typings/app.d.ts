@@ -148,13 +148,13 @@ declare module 'back-lib-common-util/dist/app/Guard' {
 
 }
 declare module 'back-lib-common-util/dist/app/DependencyContainer' {
-	import { injectable, inject, decorate, interfaces, unmanaged } from 'inversify';
+	import { injectable, inject, decorate, interfaces, unmanaged, optional } from 'inversify';
 	export class BindingScope<T> {
 	    	    constructor(_binding: interfaces.BindingInWhenOnSyntax<T>);
 	    asSingleton(): void;
 	    asTransient(): void;
 	}
-	export { injectable, inject, decorate, unmanaged };
+	export { injectable, inject, decorate, unmanaged, optional };
 	export interface INewable<T> extends interfaces.Newable<T> {
 	}
 	export interface IDependencyContainer {
