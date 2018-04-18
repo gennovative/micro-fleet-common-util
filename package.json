@@ -1,7 +1,7 @@
 {
   "name": "back-lib-common-util",
   "private": true,
-  "version": "1.2.1",
+  "version": "1.2.1-browser",
   "description": "Shared utility classes used by all other packages.",
   "main": "./dist/app/index.js",
   "types": "./typings/app.d.ts",
@@ -11,9 +11,6 @@
     "npm": "~4.6.1"
   },
   "dependencies": {
-    "bluebird": "~3.5",
-    "bluebird-global": "~1.0",
-    "flake-idgen": "~1.1",
     "int64-buffer": "~0.1",
     "inversify": "~4.3",
     "lodash": "~4.17",
