@@ -1,9 +1,5 @@
 /// <reference path="./global.d.ts" />
 
-declare module 'back-lib-common-util/dist/app/bluebirdify' {
-	import 'bluebird-global';
-
-}
 declare module 'back-lib-common-util/dist/app/Exceptions' {
 	export class Exception implements Error {
 	    readonly message: string;
@@ -259,7 +255,6 @@ declare module 'back-lib-common-util/dist/app/Types' {
 
 }
 declare module 'back-lib-common-util' {
-	import 'back-lib-common-util/dist/app/bluebirdify';
 	export * from 'back-lib-common-util/dist/app/DependencyContainer';
 	export * from 'back-lib-common-util/dist/app/Exceptions';
 	export * from 'back-lib-common-util/dist/app/Guard';
