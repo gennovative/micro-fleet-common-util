@@ -5,7 +5,7 @@
     "url": "https://github.com/gennovative"
   },
   "private": false,
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Shared utility classes used by all other packages.",
   "main": "./dist/app/index.js",
   "types": "./typings/app.d.ts",
