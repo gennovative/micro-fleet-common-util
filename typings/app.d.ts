@@ -1,10 +1,6 @@
 /// <reference path="./global.d.ts" />
 
-declare module 'back-lib-common-util/dist/app/bluebirdify' {
-	import 'bluebird-global';
-
-}
-declare module 'back-lib-common-util/dist/app/Exceptions' {
+declare module 'micro-fleet-common-util/dist/app/Exceptions' {
 	export class Exception implements Error {
 	    readonly message: string;
 	    readonly isCritical: boolean;
@@ -54,7 +50,7 @@ declare module 'back-lib-common-util/dist/app/Exceptions' {
 	}
 
 }
-declare module 'back-lib-common-util/dist/app/Guard' {
+declare module 'micro-fleet-common-util/dist/app/Guard' {
 	export class Guard {
 	    /**
 	     * Makes sure the specified `target` is not null or undefined.
@@ -147,7 +143,7 @@ declare module 'back-lib-common-util/dist/app/Guard' {
 	}
 
 }
-declare module 'back-lib-common-util/dist/app/DependencyContainer' {
+declare module 'micro-fleet-common-util/dist/app/DependencyContainer' {
 	import { injectable, inject, decorate, interfaces, unmanaged } from 'inversify';
 	export class BindingScope<T> {
 	    	    constructor(_binding: interfaces.BindingInWhenOnSyntax<T>);
@@ -221,8 +217,8 @@ declare module 'back-lib-common-util/dist/app/DependencyContainer' {
 	    	    	}
 
 }
-declare module 'back-lib-common-util/dist/app/HandlerContainer' {
-	import { IDependencyContainer } from 'back-lib-common-util/dist/app/DependencyContainer';
+declare module 'micro-fleet-common-util/dist/app/HandlerContainer' {
+	import { IDependencyContainer } from 'micro-fleet-common-util/dist/app/DependencyContainer';
 	export type ActionFactory = (obj, action: string) => Function;
 	export type HandlerDetails = {
 	    dependencyIdentifier: string | symbol;
@@ -252,18 +248,18 @@ declare module 'back-lib-common-util/dist/app/HandlerContainer' {
 	    	}
 
 }
-declare module 'back-lib-common-util/dist/app/Types' {
+declare module 'micro-fleet-common-util/dist/app/Types' {
 	export class Types {
 	    static readonly DEPENDENCY_CONTAINER: string;
 	}
 
 }
-declare module 'back-lib-common-util' {
-	import 'back-lib-common-util/dist/app/bluebirdify';
-	export * from 'back-lib-common-util/dist/app/DependencyContainer';
-	export * from 'back-lib-common-util/dist/app/Exceptions';
-	export * from 'back-lib-common-util/dist/app/Guard';
-	export * from 'back-lib-common-util/dist/app/HandlerContainer';
-	export * from 'back-lib-common-util/dist/app/Types';
+declare module 'micro-fleet-common-util' {
+	import 'bluebird-global';
+	export * from 'micro-fleet-common-util/dist/app/DependencyContainer';
+	export * from 'micro-fleet-common-util/dist/app/Exceptions';
+	export * from 'micro-fleet-common-util/dist/app/Guard';
+	export * from 'micro-fleet-common-util/dist/app/HandlerContainer';
+	export * from 'micro-fleet-common-util/dist/app/Types';
 
 }

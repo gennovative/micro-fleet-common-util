@@ -1,4 +1,4 @@
-import './bluebirdify';
+import 'bluebird-global';
 
 export * from './DependencyContainer';
 export * from './Exceptions';

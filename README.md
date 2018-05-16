@@ -1,19 +1,23 @@
-# Gennova backend common utility
+# Micro Fleet - Backend Common Utilities
 
-Shared utility classes used by all other packages.
+One of the packages of Micro Fleet framework, contains shared utility classes used by all other packages.
 
 ## INSTALLATION
 
-`npm i`: To install dependencies.
-`gulp` to transpile TypeScript.
+- Stable version: `npm i @micro-fleet/common-util`
+- Edge (development) version: `npm i git://github.com/gennovative/micro-fleet-common-util.git`
 
 ## DEVELOPMENT
 
-`gulp watch`: To transpile and watch for edit.
+- `gulp` to transpile TypeScript then run unit tests (equiv. `gulp compile` + `gulp test`).
+- `gulp compile`: To transpile TypeScript into JavaScript.
+- `gulp test`: To run unit tests.
+- `gulp watch`: To transpile and watch for edit without running unit tests.
 
 ## RELEASE
 
-`gulp release`: To transpile and create `app.d.ts` definition file.
+- `gulp release`: To transpile and create `app.d.ts` definition file.
+- **Note:** Please commit transpiled code in folder `dist` and definition file `app.d.ts` relevant to the TypeScript version.
 
 ## VERSIONS
 

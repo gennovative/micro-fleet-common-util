@@ -1,21 +1,23 @@
 {
-  "name": "back-lib-common-util",
-  "private": true,
+  "name": "micro-fleet-common-util",
+  "author": {
+    "name": "gennovative",
+    "url": "https://github.com/gennovative"
+  },
+  "private": false,
   "version": "1.2.1",
   "description": "Shared utility classes used by all other packages.",
   "main": "./dist/app/index.js",
   "types": "./typings/app.d.ts",
-  "repository": "git@bitbucket.org:firstinteractive/back-lib-common-util.git",
+  "repository": "git@github.com:gennovative/micro-fleet-common-util.git",
   "engines": {
-    "node": "~7.10.1",
-    "npm": "~4.6.1"
+    "node": "^8.11",
+    "npm": "^5.8"
   },
   "dependencies": {
     "bluebird": "~3.5",
     "bluebird-global": "~1.0",
-    "flake-idgen": "~1.1",
-    "int64-buffer": "~0.1",
-    "inversify": "~4.3",
+    "inversify": "~4.11",
     "lodash": "~4.17",
     "reflect-metadata": "~0.1"
   },
@@ -23,10 +25,9 @@
     "@types/bluebird-global": "~3.5",
     "@types/chai": "~4.0",
     "@types/chai-spies": "0.0.0",
-    "@types/flake-idgen": "~0.1",
     "@types/lodash": "~4.14",
     "@types/mocha": "~2.2",
-    "@types/node": "~7.0",
+    "@types/node": "~8.10",
     "chai": "~4.1",
     "chai-spies": "git://github.com/chaijs/chai-spies.git#b11aeebf",
     "del": "~3.0",
@@ -48,7 +49,7 @@
     "mocha": "~3.4",
     "remap-istanbul": "~0.9",
     "through2": "~2.0",
-    "tslint": "~5.5",
-    "typescript": "~2.5"
+    "tslint": "~5.9",
+    "typescript": "~2.8"
   }
 }
